@@ -56,7 +56,7 @@ class _EntradasTextoState extends State<EntradasTexto> {
             alignment: Alignment.centerRight,
             child: FlatButton(
               onPressed: () {
-                //forgot password screen
+                _olvidasteContraSheet();
               },
               textColor: Colors.red,
               child: Text('¿Olvidaste tu contraseña?'),
@@ -70,14 +70,16 @@ class _EntradasTextoState extends State<EntradasTexto> {
                 'INICIAR SESIÓN',
                 style: TextStyle(color: Colors.white),
               ),
-              progressWidget: const CircularProgressIndicator(),
+              progressWidget: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
               color: Colors.redAccent,
               borderRadius: 15,
               onPressed: () async {
                 int score = await Future.delayed(
                     const Duration(milliseconds: 3000), () => 42);
                 return () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => InicioPage(),
@@ -89,5 +91,87 @@ class _EntradasTextoState extends State<EntradasTexto> {
         ],
       ),
     );
+  }
+
+  void _olvidasteContraSheet() {
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(20),
+                  topRight: const Radius.circular(20),
+                )),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 10, top: 30),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Recupera tu cuenta",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'SFUIDisplay',
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromRGBO(234, 100, 86, 1.0)),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, top: 2, bottom: 10),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Enviaremos un mensaje al siguiente correo",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'SFUIDisplay',
+                            color: Colors.black45),
+                      )),
+                ),
+                Divider(
+                  thickness: 2,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.email),
+                        labelText: "Email de cuenta",
+                        hintText: "Email",
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Colors.redAccent, width: 2.0),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    )),
+                Container(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(top: 25, right: 25, bottom: 5),
+                  child: MaterialButton(
+                    onPressed: () {},
+                    textColor: Colors.black54,
+                    height: 35,
+                    highlightColor: Colors.red,
+                    splashColor: Colors.red,
+                    colorBrightness: Brightness.dark,
+                    textTheme: ButtonTextTheme.accent,
+                    shape: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Colors.redAccent)),
+                    child: Text("Recuperar"),
+                  ),
+                )
+              ],
+            ),
+          );
+        });
   }
 }

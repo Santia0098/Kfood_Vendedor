@@ -12,10 +12,8 @@ class InicioPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: FoodNavigationBar(),
-      body: Container(
-        child: Center(
-          child: Text("Inicio Page"),
-        ),
+      body: SafeArea(
+        child: Text("Inicio"),
       ),
     );
   }
@@ -115,9 +113,8 @@ class _NavigationBarState extends State<FoodNavigationBar> {
             });
           },
        ),
-       body: Container(
-          color: Colors.white,
-          child: Center(
+       body: Scaffold(
+          body: SafeArea(
             child: _showPage,
           ),
         ));

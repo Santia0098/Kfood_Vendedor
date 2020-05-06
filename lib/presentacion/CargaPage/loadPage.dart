@@ -10,7 +10,7 @@ class LoadPage extends State<Splash> {
     Timer(
       Duration(seconds: 4),
       () {
-        Navigator.push(
+        Navigator.pushReplacement(
           this.context,
           MaterialPageRoute(
             builder: (context) => LoginPage(),

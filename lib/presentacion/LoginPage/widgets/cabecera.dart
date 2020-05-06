@@ -13,7 +13,7 @@ class Cabecera extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Inicia Sesión",
+                "Iniciar Sesión",
                 style: TextStyle(
                   fontSize: 38,
                   fontFamily: 'SFUIDisplay',
@@ -28,7 +28,7 @@ class Cabecera extends StatelessWidget {
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Vamos vender!",
+                  "Vamos a vender!",
                   style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'SFUIDisplay',
