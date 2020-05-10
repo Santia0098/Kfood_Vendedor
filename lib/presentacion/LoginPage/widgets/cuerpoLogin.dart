@@ -76,8 +76,8 @@ class _EntradasTextoState extends State<EntradasTexto> {
               color: Colors.redAccent,
               borderRadius: 15,
               onPressed: () async {
-                int score = await Future.delayed(
-                    const Duration(milliseconds: 3000), () => 42);
+                // int score = await Future.delayed(
+                //     const Duration(milliseconds: 3000), () => 42);
                 return () {
                   Navigator.pushReplacement(
                       context,
