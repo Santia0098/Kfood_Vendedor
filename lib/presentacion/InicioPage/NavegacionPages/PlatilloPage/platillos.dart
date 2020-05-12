@@ -1,26 +1,288 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-
-class Platillos extends StatefulWidget {
-  Platillos({Key key}) : super(key: key);
-
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/widgets/platillos_list.dart';
+ 
+class PlatillosScreen extends StatefulWidget {
   @override
-  _PlatillosState createState() => _PlatillosState();
+  _PlatillosScreenState createState() => _PlatillosScreenState();
 }
 
-class _PlatillosState extends State<Platillos> {
+class _PlatillosScreenState extends State<PlatillosScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        bottom: true,
-        child: Container(
-            alignment: Alignment.centerLeft,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+      backgroundColor: Colors.white,
+      body: Container(
+        child: ListView(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Tus Platillos",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 45,
+                      color: Color.fromRGBO(248, 64, 0, 1),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Administra el menú del día",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 18,
+                      color: Color.fromRGBO(248, 64, 0, 1),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+
+
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Aregar al platillo",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Color.fromRGBO(248, 64, 0, 1),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                     _abrirActualizar();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(3.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(),
+                      ),
+                      child:
+                          Icon(Icons.add, color: Color.fromRGBO(248, 64, 0, 1)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+ 
+            
+            
+            Container(
+              height: 500,
+              child: PlatillosLista(),
+            ),
+            
            
+           ],
         ),
-      )
+      ),
     );
   }
-}
 
+  
+
+  void _abrirActualizar() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            alignment: Alignment.topLeft,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height - 100,
+            padding: EdgeInsets.symmetric(
+              horizontal: 35.0,
+              vertical: 30.0,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 35, bottom: 20),
+                    child: Container(
+                      child: Text(
+                        "Agregar Platillo",
+                        style: TextStyle(
+                          color: Color.fromRGBO(248, 64, 0, 1),
+                          letterSpacing: 1.0,
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  _nombrePlatillo(),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  _precioPlatillo(),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  _guardar(context),               
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+
+
+
+
+  Widget _nombrePlatillo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Nombre del platillo:',
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          height: 50.0,
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+             prefixIcon: Icon(
+               Icons.fastfood,
+                color: Colors.black,
+              ),
+          
+              hintText: 'Platillo',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+
+
+  
+  Widget _precioPlatillo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Precio:',
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          height: 50.0,
+          child: TextField(
+            obscureText: true,
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+               Icons.local_atm,
+                color: Colors.black,
+              ),
+              hintText: 'Precio',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+
+
+
+  Widget _guardar(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+         
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        color: Color.fromRGBO(248, 64, 0, 1),
+        child: Text(
+          'Registrar',
+          style: TextStyle(
+            color: Colors.white,
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    );
+  }
+
+
+
+    Widget _cancelar(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+         
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        color: Color.fromRGBO(248, 64, 0, 1),
+        child: Text(
+          'Cancelar',
+          style: TextStyle(
+            color: Colors.white,
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    );
+  }
+
+
+
+}
