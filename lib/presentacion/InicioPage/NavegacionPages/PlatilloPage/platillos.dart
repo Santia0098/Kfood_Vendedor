@@ -17,12 +17,10 @@ class _PlatillosState extends State<Platillos> {
             alignment: Alignment.centerLeft,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/platillos.png'),
-                    fit: BoxFit.fill)),
+           
         ),
       )
     );
   }
 }
+
