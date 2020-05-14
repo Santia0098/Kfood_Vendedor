@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/AjustesPage/ajustes.dart';
-import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/ComidaPage/comida.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/ComidaPage/comidas.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/GuisosPage/guisos.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/PlatilloPage/platillos.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/PedidosPage/pedidos.dart';
@@ -41,15 +41,15 @@ class _NavigationBarState extends State<FoodNavigationBar> {
         break;
       case 1:
       pageindex=1;
-        return Comida();
+        return ComidasScreen();
         break;
       case 2:
       pageindex=2;
-        return Guisos();
+        return GuisosScreen();
         break;
       case 3:
       pageindex=3;
-        return Platillos();
+        return PlatillosScreen();
         break;
         case 4:
       pageindex=4;

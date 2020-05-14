@@ -1,14 +1,12 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/widgets/guisos_list.dart';
-
-
-class GuisosScreen extends StatefulWidget {
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/widgets/comidas_list.dart';
+  
+class ComidasScreen extends StatefulWidget {
   @override
-  _GuisosScreenState createState() => _GuisosScreenState();
+  _ComidasScreenState createState() => _ComidasScreenState();
 }
 
-class _GuisosScreenState extends State<GuisosScreen> {
+class _ComidasScreenState extends State<ComidasScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +20,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Tus Guisos",
+                    "Tus Comidas",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 45,
@@ -59,7 +57,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Aregar guiso",
+                    "Aregar una comida",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -89,7 +87,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
             
             Container(
               height: 500,
-              child: GuisosLista(),
+              child: ComidasLista(),
             ),
             
            
@@ -120,7 +118,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
                     padding: EdgeInsets.only(top: 35, bottom: 20),
                     child: Container(
                       child: Text(
-                        "Agregar guiso",
+                        "Agregar Comida",
                         style: TextStyle(
                           color: Color.fromRGBO(248, 64, 0, 1),
                           letterSpacing: 1.0,
@@ -134,15 +132,15 @@ class _GuisosScreenState extends State<GuisosScreen> {
                   Divider(
                     thickness: 2,
                   ),
-                  _nombreGuiso(),
+                  _nombreComida(),
                   SizedBox(
                     width: 20,
                   ),
+                  _precioComida(),
                   SizedBox(
                     width: 20,
                   ),
                   _guardar(context),               
-       
                 ],
               ),
             ),
@@ -154,12 +152,12 @@ class _GuisosScreenState extends State<GuisosScreen> {
 
 
 
-  Widget _nombreGuiso() {
+  Widget _nombreComida() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Nombre del guiso:',
+          'Nombre de la comida:',
         ),
         SizedBox(height: 10.0),
         Container(
@@ -178,13 +176,52 @@ class _GuisosScreenState extends State<GuisosScreen> {
                 color: Colors.black,
               ),
           
-              hintText: 'Guiso',
+              hintText: 'Comida',
             ),
           ),
         ),
       ],
     );
   }
+
+
+
+
+  
+  Widget _precioComida() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Precio:',
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          height: 50.0,
+          child: TextField(
+            obscureText: true,
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+               Icons.local_atm,
+                color: Colors.black,
+              ),
+              hintText: 'Precio',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+
 
 
   Widget _guardar(BuildContext context) {
@@ -214,6 +251,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
       ),
     );
   }
+
 
 
     Widget _cancelar(BuildContext context) {
@@ -246,8 +284,5 @@ class _GuisosScreenState extends State<GuisosScreen> {
 
 
 
-
-
-
-
 }
+
