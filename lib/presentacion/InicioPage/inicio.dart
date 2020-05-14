@@ -53,7 +53,7 @@ class _NavigationBarState extends State<FoodNavigationBar> {
         break;
         case 4:
       pageindex=4;
-        return Ajustes();
+        return Mas();
         break;
       default:
         return new Container(
@@ -101,8 +101,8 @@ class _NavigationBarState extends State<FoodNavigationBar> {
              ),)
            ),
            BottomNavigationBarItem(
-             icon: Icon(Icons.settings),
-             title: new Text("Ajustes", style: TextStyle(
+             icon: Icon(Icons.more_vert),
+             title: new Text("Más", style: TextStyle(
                color: Colors.black38
              ),)
            )
