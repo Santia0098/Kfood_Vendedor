@@ -1,8 +1,10 @@
 class Comida {
+  String id;
   String title;
   String price;
   Comida(
-      {this.title,
-      this.price,
-      });
+        this.id,
+        this.title,
+        this.price
+      );
 }

@@ -1,5 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:kfood_vendedor/datos/requests.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/model/comida.dart';
   
 class ComidasLista extends StatefulWidget {
@@ -8,29 +11,27 @@ class ComidasLista extends StatefulWidget {
 }
 
   class ComidaList extends State<ComidasLista> {
-  final comidaItems = <Comida>[
-
-    Comida(
-      title: "Café",
-      price: "15.00",
-    ),
-    
-    Comida(
-      title: "Tacos",
-      price: "7.00",
-    ),
-    Comida(
-      title: "Migada",
-      price: "25.00",
-    ),
-    Comida(
-      title: "Hamburguesa",
-      price: "25.00",
-    ),
-   
-  ];
+  final comidaItems = <Comida>[];
   
+  @override
+  void initState() {
+    super.initState();
+    imprimirLista();
+  }
 
+  void imprimirLista() async {
+    String jsonComida = await executeHttpRequest(urlFile: "/getComidas.php", requestBody: null);
+    print(jsonComida);
+    Map<String,dynamic> datos = json.decode(jsonComida);
+    for(var comida in datos['comida']){
+      String aux = await textFormarter(comida.toString());
+      print(comida);
+      print(aux);
+      Map<String,dynamic> datoscomida = json.decode(aux);
+      comidaItems.add(Comida(datoscomida['id'],datoscomida['nombre'],datoscomida['precio']));
+    }
+    setState(() {});
+  }
 
 
   @override
@@ -88,7 +89,12 @@ class ComidasLista extends StatefulWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-
+                      Map<String,String> body = {
+                        'id':'${comida.id}'
+                      };
+                      executeHttpRequest(urlFile: "/dropComida", requestBody: body);
+                      comidaItems.clear();
+                      imprimirLista();
                     },
                     child: Container(
                       padding: const EdgeInsets.all(5.0),

@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/widgets/comidas_list.dart';
   
 class ComidasScreen extends StatefulWidget {
@@ -151,7 +152,8 @@ class _ComidasScreenState extends State<ComidasScreen> {
 
 
 
-
+  final comidaController = TextEditingController();
+  final precioController = TextEditingController();
 
   Widget _nombreComida() {
     return Column(
@@ -165,6 +167,7 @@ class _ComidasScreenState extends State<ComidasScreen> {
           alignment: Alignment.centerLeft,
           height: 50.0,
           child: TextField(
+            controller: comidaController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               fontFamily: 'OpenSans',
@@ -201,6 +204,7 @@ class _ComidasScreenState extends State<ComidasScreen> {
           alignment: Alignment.centerLeft,
           height: 50.0,
           child: TextField(
+            controller: precioController,
             obscureText: true,
             style: TextStyle(
               color: Colors.black,
@@ -232,7 +236,19 @@ class _ComidasScreenState extends State<ComidasScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-         
+          if (RegExp("^[0-9]+(\.[0-9][0-9]?)?").hasMatch(precioController.text) &&
+              comidaController.text.isNotEmpty) {
+            String price = RegExp("^[0-9]+(\.[0-9][0-9]?)?").stringMatch(precioController.text);
+            Map<String,String> body = {
+              'nombre':'${comidaController.text}',
+              'precio':'$price'
+            };
+            executeHttpRequest(urlFile: "/addComida.php", requestBody: body);
+            Navigator.of(context).pop();
+          }else{
+            //TODO: poner un toast
+            print("un error");
+          }
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
