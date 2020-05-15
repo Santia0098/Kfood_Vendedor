@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:kfood_vendedor/datos/requests.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/model/platillo.dart';
 
 
@@ -11,25 +15,27 @@ class PlatillosLista extends StatefulWidget {
 
 
   class PlatilloList extends State<PlatillosLista> {
-  final platilloItems = <Platillo>[
+  final platilloItems = <Platillo>[];
 
-    Platillo(
-      title: "Chiles rellenos",
-      price: "15.00",
-    ),
-    
-    Platillo(
-      title: "Rollo de carne",
-      price: "7.00",
-    ),
-    Platillo(
-      title: "Filete con arroz",
-      price: "25.00",
-    ),
-   
-  ];
-  
+  @override
+  void initState(){
+    super.initState();
+    imprimirLista();
+  }
 
+  void imprimirLista() async {
+    String jsonPlatillo = await executeHttpRequest(urlFile: "/getPlatillos.php", requestBody: null);
+    print(jsonPlatillo);
+    Map<String,dynamic> datos = json.decode(jsonPlatillo);
+    for(var platillo in datos['platillo']){
+      String aux = await textFormarter(platillo.toString());
+      print(platillo);
+      print(aux);
+      Map<String,dynamic> datosplatillo = json.decode(aux);
+      platilloItems.add(Platillo(datosplatillo['id'],datosplatillo['nombre'],datosplatillo['precio']));
+    }
+    setState(() {});
+  }
 
 
   @override
@@ -87,7 +93,12 @@ class PlatillosLista extends StatefulWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-
+                      Map<String,String> body = {
+                        'id':'${platillos.id}'
+                      };
+                      executeHttpRequest(urlFile: "/dropPlatillo", requestBody: body);
+                      platilloItems.clear();
+                      imprimirLista();
                     },
                     child: Container(
                       padding: const EdgeInsets.all(5.0),

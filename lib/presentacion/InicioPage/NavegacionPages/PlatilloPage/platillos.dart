@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/widgets/platillos_list.dart';
  
 class PlatillosScreen extends StatefulWidget {
@@ -150,7 +151,8 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
 
 
 
-
+  final platilloController = TextEditingController();
+  final precioController = TextEditingController();
 
   Widget _nombrePlatillo() {
     return Column(
@@ -164,6 +166,7 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
           alignment: Alignment.centerLeft,
           height: 50.0,
           child: TextField(
+            controller: platilloController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               fontFamily: 'OpenSans',
@@ -200,6 +203,7 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
           alignment: Alignment.centerLeft,
           height: 50.0,
           child: TextField(
+            controller: precioController,
             obscureText: true,
             style: TextStyle(
               color: Colors.black,
@@ -231,7 +235,20 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-         
+          if (RegExp("^[0-9]+(\.[0-9][0-9]?)?").hasMatch(precioController.text) &&
+          platilloController.text.isNotEmpty) {
+            String price = RegExp("^[0-9]+(\.[0-9][0-9]?)?").stringMatch(precioController.text);
+            Map<String,String> body = {
+              'nombre':'${platilloController.text}',
+              'precio':'$price'
+            };
+            executeHttpRequest(urlFile: "/addPlatillo.php", requestBody: body);
+            Navigator.of(context).pop();
+          }else{
+            //TODO: poner un toast
+            print("un error");
+          }
+          
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
