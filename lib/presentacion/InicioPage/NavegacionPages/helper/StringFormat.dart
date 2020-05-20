@@ -11,12 +11,6 @@ String textFormarter(String s){
       characterNumber++;
 
       lastCharacter=index;
-      if(characterNumber==1){
-        s = s.replaceRange(0, 1, "${s[0]}\"");
-        index++;
-        lastCharacter++;
-
-      }
       if(lastSpace==index-1 && lastSeparator==index-2){
         s = s.replaceRange(lastSpace, lastSpace+1, "${s[lastSpace]}\"");
         index++;
@@ -24,16 +18,22 @@ String textFormarter(String s){
         lastSpace++;
         lastSeparator++;
       }
-    }else if(char==':' || char==',' || char=='}'){
+    }else if((char==':' || char==',' || char=='}') && lastSeparator!=lastCharacter){
       s = s.replaceRange(lastCharacter, lastCharacter+1, "${s[lastCharacter]}\"");
       index++;
       lastSeparator=index;
       lastCharacter++;
       lastSpace++;
-    }else if(char==' '){
+    }else if(char=='{'){
+      s = s.replaceRange(index, index+1, "${s[index]}\"");
+      index++;
+      lastCharacter++;
+      lastSpace++;
+      lastSeparator++;
+    }
+    else if(char==' '){
       lastSpace=index;
     }
   });
-  print(s);
-  return s;
+  return s.replaceAll("\"\"", "\"");
 }
