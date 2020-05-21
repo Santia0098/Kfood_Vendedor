@@ -1,6 +1,8 @@
 class Guiso {
+  String id;
   String title;
   Guiso(
-      {this.title,
-      });
+        this.id,
+        this.title,
+      );
 }

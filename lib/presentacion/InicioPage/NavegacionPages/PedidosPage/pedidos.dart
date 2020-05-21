@@ -135,9 +135,7 @@ class _PedidosState extends State<Pedidos> {
         child: new Container(
             child: InkWell(
           splashColor: Colors.black45,
-          onTap: () {
-            _detallesdelPedido();
-          },
+          onTap: () {},
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7.0),
@@ -286,80 +284,8 @@ class _PedidosState extends State<Pedidos> {
         )));
   }
 
-  Widget _detallesPedido() {
-    return Container(
-      width: (MediaQuery.of(context).size.width) - 30,
-      height: (MediaQuery.of(context).size.height / 2) - 80,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        color: Colors.white,
-        elevation: 5,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: new SingleChildScrollView(
-                  child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                              padding: EdgeInsets.only(top: 15, bottom: 10),
-                              alignment: Alignment.centerLeft,
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    CupertinoIcons.info,
-                                    size: 20,
-                                  ),
-                                  Text(
-                                    "Detalles del pedido.",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'SFUIDisplay',
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              )),
-                          new Text(
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'SFUIDisplay',
-                                color: Colors.black45),
-                          ),
-                        ],
-                      ))),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _detallesdelPedido() {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) {
-          return Container(
-            padding: EdgeInsets.only(
-                top: (MediaQuery.of(context).size.height / 2) - 50),
-            child: Column(
-              children: <Widget>[
-                _detallesPedido()
-              ],
-            ),
-          );
-        });
-  }
-
   Widget _lista() {
-    final List<String> items =
-        new List<String>.generate(10, (i) => "item  ${i + 1}");
+    final List<String> items = new List<String>.generate(10, (i) => "item  ${i + 1}");
     return Expanded(
       child: ListView.builder(
           scrollDirection: Axis.vertical,
