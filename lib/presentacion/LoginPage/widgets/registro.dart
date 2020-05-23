@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kfood_vendedor/presentacion/LoginPage/widgets/cabeceraRegistro.dart';
+import 'package:kfood_vendedor/presentacion/LoginPage/widgets/registroLogic.dart';
 
 class RegistroSheet extends StatefulWidget {
   RegistroSheet({Key key}) : super(key: key);
@@ -33,6 +35,13 @@ class _RegistroSheetState extends State<RegistroSheet> {
   }
 
   void _onPressed() {
+    final usuarioController = TextEditingController();
+    final nombreController = TextEditingController();
+    final apellidosController = TextEditingController();
+    final cafeteriaController = TextEditingController();
+    final correoController = TextEditingController();
+    final contrasenaController = TextEditingController();
+
     showBottomSheet(
         context: context,
         builder: (context) {
@@ -57,6 +66,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: TextFormField(
+                      controller: usuarioController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.person_outline),
                         labelText: "Usuario. ",
@@ -72,6 +82,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: TextFormField(
+                      controller: nombreController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.perm_contact_calendar),
                         labelText: "Nombre.",
@@ -87,6 +98,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: TextFormField(
+                      controller: apellidosController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.perm_contact_calendar),
                         labelText: "Apellidos.",
@@ -102,6 +114,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: TextFormField(
+                      controller: cafeteriaController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.restaurant),
                         labelText: "Cafeteria",
@@ -117,6 +130,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: TextFormField(
+                      controller: correoController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.alternate_email),
                         labelText: "Correo",
@@ -132,6 +146,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: TextFormField(
+                      controller: contrasenaController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.vpn_key),
                         labelText: "Contraseña.",
@@ -149,8 +164,17 @@ class _RegistroSheetState extends State<RegistroSheet> {
                   padding:
                       EdgeInsets.only(top: 25, right: 25, bottom: 5),
                   child: MaterialButton(
-                    onPressed: () {
-                      
+                    onPressed: () async {
+                      if("exito" == await signIn(correoController.text, nombreController.text, apellidosController.text, cafeteriaController.text, usuarioController.text, contrasenaController.text)){
+                        logOut();
+                        Navigator.pop(context);
+                      }else{
+                        Fluttertoast.showToast(
+                          msg: "El correo no es del itsmante",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                        );
+                      }
                     },
                     textColor: Colors.black54,
                     height: 35,

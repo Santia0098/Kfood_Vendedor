@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_button/flutter_progress_button.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/inicio.dart';
+import 'package:kfood_vendedor/presentacion/LoginPage/widgets/loginLogic.dart';
 
 class EntradasTexto extends StatefulWidget {
   @override
   _EntradasTextoState createState() => _EntradasTextoState();
 }
-
+final usuarioController = TextEditingController();
+final contrasenaController = TextEditingController();
 class _EntradasTextoState extends State<EntradasTexto> {
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class _EntradasTextoState extends State<EntradasTexto> {
           Container(
               width: 300,
               child: TextFormField(
+                controller: usuarioController,
                 decoration: InputDecoration(
                   labelText: "Usuario",
                   hintText: "Nombre de usuario",
@@ -41,6 +44,7 @@ class _EntradasTextoState extends State<EntradasTexto> {
               padding: EdgeInsets.only(top: 30),
               width: 300,
               child: TextFormField(
+                controller: contrasenaController,
                 decoration: InputDecoration(
                   labelText: "Contraseña",
                   hintText: "Contraseña de cuenta",
@@ -76,15 +80,13 @@ class _EntradasTextoState extends State<EntradasTexto> {
               color: Colors.redAccent,
               borderRadius: 15,
               onPressed: () async {
-                int score = await Future.delayed(
-                    const Duration(milliseconds: 3000), () => 42);
-                return () {
+                if (await logIn(usuarioController.text, contrasenaController.text)){
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => InicioPage(),
                       ));
-                };
+                }
               },
             ),
           ),
@@ -93,6 +95,7 @@ class _EntradasTextoState extends State<EntradasTexto> {
     );
   }
 
+  final emailController = TextEditingController();
   void _olvidasteContraSheet() {
     showModalBottomSheet(
         backgroundColor: Colors.transparent,
@@ -140,6 +143,7 @@ class _EntradasTextoState extends State<EntradasTexto> {
                 Padding(
                     padding: EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: TextFormField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.email),
                         labelText: "Email de cuenta",
@@ -156,7 +160,9 @@ class _EntradasTextoState extends State<EntradasTexto> {
                   alignment: Alignment.centerRight,
                   padding: EdgeInsets.only(top: 25, right: 25, bottom: 5),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      restorePassword(emailController.text);
+                    },
                     textColor: Colors.black54,
                     height: 35,
                     highlightColor: Colors.red,
