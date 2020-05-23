@@ -58,7 +58,7 @@ class _ComidasScreenState extends State<ComidasScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Aregar una comida",
+                    "Agregar una comida",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,

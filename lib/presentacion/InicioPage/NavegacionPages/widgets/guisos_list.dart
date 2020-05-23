@@ -1,6 +1,11 @@
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:kfood_vendedor/datos/requests.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/model/guiso.dart';
+
+
 
 
 class GuisosLista extends StatefulWidget {
@@ -10,29 +15,27 @@ class GuisosLista extends StatefulWidget {
 
 
   class GuisoList extends State<GuisosLista> {
-  final guisoItems = <Guiso>[
-    
-    Guiso(
-      title: "Bistec ranchero",
-    ),
-    
-    Guiso(
-      title: "Frijoles con queso",
-    ),
-    Guiso(
-      title: "Cochinita",
-    ),
-    Guiso(
-      title: "Huevo verde",
-    ),
-    Guiso(
-      title: "Huevo con chorizo",
-    ),
+  final guisoItems = <Guiso>[];
 
-  ];
-  
+  @override
+  void initState() {
+    super.initState();
+    imprimirLista();
+  }
 
-
+  imprimirLista() async{
+    String jsonGuiso = await executeHttpRequest(urlFile: "/getGuisos.php", requestBody: null);
+    print(jsonGuiso);
+    Map<String,dynamic> datos = json.decode(jsonGuiso);
+    for(var guiso in datos['guiso']){
+      String aux = await textFormarter(guiso.toString());
+      print(guiso);
+      print(aux);
+      Map<String,dynamic> datosguiso = json.decode(aux);
+      guisoItems.add(Guiso(datosguiso['id'],datosguiso['nombre']));
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +93,12 @@ class GuisosLista extends StatefulWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-
+                      Map<String,String> body = {
+                        'id':'${guiso.id}'
+                      };
+                      executeHttpRequest(urlFile: "/dropGuiso.php", requestBody: body);
+                      guisoItems.clear();
+                      imprimirLista();
                     },
                     child: Container(
                       padding: const EdgeInsets.all(5.0),

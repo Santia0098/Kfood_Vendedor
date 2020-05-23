@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/widgets/guisos_list.dart';
 
 
@@ -58,7 +60,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Aregar guiso",
+                    "Agregar guiso",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -150,8 +152,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
   }
 
 
-
-
+  final guisoController = TextEditingController();
 
   Widget _nombreGuiso() {
     return Column(
@@ -165,6 +166,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
           alignment: Alignment.centerLeft,
           height: 50.0,
           child: TextField(
+            controller: guisoController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               fontFamily: 'OpenSans',
@@ -193,7 +195,17 @@ class _GuisosScreenState extends State<GuisosScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-         
+          if(guisoController.text.isNotEmpty){
+            Map<String,String> body = {
+              'nombre':'${guisoController.text}',
+            };
+            executeHttpRequest(urlFile: "/addGuiso.php", requestBody: body);
+            Navigator.of(context).pop();
+
+          }
+          else{
+            Fluttertoast.showToast(msg: "Ingrese una comida");
+          }
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
