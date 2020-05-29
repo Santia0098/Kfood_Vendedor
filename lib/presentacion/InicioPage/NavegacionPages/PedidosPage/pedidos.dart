@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kfood_vendedor/datos/requests.dart';
+import 'package:kfood_vendedor/negocios/class/pedido.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
 
 class Pedidos extends StatefulWidget {
   Pedidos({Key key}) : super(key: key);
@@ -10,6 +15,29 @@ class Pedidos extends StatefulWidget {
 }
 
 class _PedidosState extends State<Pedidos> {
+
+  final pedidosItems = <Pedido>[];
+
+  @override
+  void initState() {
+    super.initState();
+    imprimirLista();
+  }
+
+  void imprimirLista() async {
+    String jsonPedidos = await executeHttpRequest(urlFile: "/getPedidos.php", requestBody: null);
+    print(jsonPedidos);
+    Map<String,dynamic> datos = json.decode(jsonPedidos);
+    for (var pedido in datos['pedido']){
+      String aux = await textFormarter(pedido.toString());
+      print(aux);
+      Map<String,dynamic> datosPedido = json.decode(aux);
+      //this.idPedido, this.idUsuario, this.nombreUsuario, this.apePat, this.apeMat, this.estado, this.total, this.hora
+      pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -129,7 +157,7 @@ class _PedidosState extends State<Pedidos> {
     );
   }
 
-  Widget _itemLista() {
+  Widget _itemLista(Pedido pedidosItem) {
     return new Container(
         padding: EdgeInsets.all(5),
         child: new Container(
@@ -179,7 +207,7 @@ class _PedidosState extends State<Pedidos> {
                                               size: 15,
                                             ),
                                             Text(
-                                              "  Nombre del cliente",
+                                              "  ${pedidosItem.nombreUsuario} ${pedidosItem.apePat} ${pedidosItem.apeMat}",
                                               style: new TextStyle(
                                                   fontSize: 15.0,
                                                   fontFamily: "SFUIDisplay",
@@ -231,7 +259,7 @@ class _PedidosState extends State<Pedidos> {
                             ]),
                           ),
                           Text(
-                            "15:50",
+                            "${pedidosItem.hora.replaceAll("-", ":")}",
                             style: new TextStyle(
                                 fontSize: 13,
                                 fontFamily: "SFUIDisplay",
@@ -247,7 +275,7 @@ class _PedidosState extends State<Pedidos> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Text(
-                          "99.00",
+                          "${pedidosItem.total}",
                           style: new TextStyle(
                               fontSize: 20.0, fontFamily: "SFUIDisplay"),
                         ),
@@ -285,12 +313,12 @@ class _PedidosState extends State<Pedidos> {
   }
 
   Widget _lista() {
-    final List<String> items = new List<String>.generate(10, (i) => "item  ${i + 1}");
+    //final List<String> items = new List<String>.generate(10, (i) => "item  ${i + 1}");
     return Expanded(
       child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: items.length,
+          itemCount: pedidosItems.length,
           itemBuilder: (context, int index) {
             return Slidable(
               actions: <Widget>[
@@ -299,10 +327,10 @@ class _PedidosState extends State<Pedidos> {
                     caption: 'Preparado',
                     color: Colors.greenAccent,
                     onTap: () {
-                      print("Item ${items[index]} fue Clickeado");
+                      print("ID Item ${pedidosItems[index].idPedido} fue Clickeado");
                     }),
               ],
-              child: _itemLista(),
+              child: _itemLista(pedidosItems[index]),
               actionPane: SlidableDrawerActionPane(),
             );
           }),
