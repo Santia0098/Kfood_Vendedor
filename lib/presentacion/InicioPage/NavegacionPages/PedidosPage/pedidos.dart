@@ -163,7 +163,9 @@ class _PedidosState extends State<Pedidos> {
         child: new Container(
             child: InkWell(
           splashColor: Colors.black45,
-          onTap: () {},
+          onTap: () {
+            _detallesdelPedido(pedidosItem.idPedido);
+          },
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7.0),
@@ -310,6 +312,97 @@ class _PedidosState extends State<Pedidos> {
             ),
           ),
         )));
+  }
+
+  Widget _detallesPedido(String mensaje) {
+    return Container(
+      width: (MediaQuery.of(context).size.width) - 30,
+      height: (MediaQuery.of(context).size.height / 2) - 80,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        color: Colors.white,
+        elevation: 5,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: new SingleChildScrollView(
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                              padding: EdgeInsets.only(top: 15, bottom: 10),
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    CupertinoIcons.info,
+                                    size: 20,
+                                  ),
+                                  Text(
+                                    "Detalles del pedido.",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'SFUIDisplay',
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          new Text(
+                            "$mensaje",
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: 'SFUIDisplay',
+                                color: Colors.black45),
+                          ),
+                        ],
+                      ))),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _detallesdelPedido(String idPedido) async {
+    Map<String,String> body = {
+      'idPedido':'$idPedido'
+    };
+    String jsonDetalles = await executeHttpRequest(urlFile: "/getPedidoDetalles.php", requestBody: body);
+    print(jsonDetalles);
+    Map<String,dynamic> datos = json.decode(jsonDetalles);
+    String mensaje = "";
+    for (var detalle in datos['plato']){
+      String aux = await textFormarter(detalle.toString());
+      print(aux);
+      Map<String,dynamic> datosDetalles = json.decode(aux);
+
+      print("${datosDetalles['cantidad']} ${datosDetalles['nombre_comida']} de ${datosDetalles['nombre_guiso']}");
+      if(datosDetalles['nombre_guiso']!="null"){
+        mensaje += "${datosDetalles['cantidad']} ${datosDetalles['nombre_comida']} de ${datosDetalles['nombre_guiso']}\n";
+      }else{
+        mensaje += "${datosDetalles['cantidad']} ${datosDetalles['nombre_comida']}\n";
+      }
+
+    }
+    showCupertinoModalPopup(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.only(
+                top: (MediaQuery.of(context).size.height / 2) - 50),
+            child: Column(
+              children: <Widget>[
+                _detallesPedido(mensaje)
+              ],
+            ),
+          );
+        });
   }
 
   Widget _lista() {
