@@ -25,6 +25,7 @@ class _PedidosState extends State<Pedidos> {
   }
 
   void imprimirLista() async {
+    pedidosItems.clear();
     String jsonPedidos = await executeHttpRequest(urlFile: "/getPedidos.php", requestBody: null);
     print(jsonPedidos);
     Map<String,dynamic> datos = json.decode(jsonPedidos);
@@ -405,6 +406,15 @@ class _PedidosState extends State<Pedidos> {
         });
   }
 
+  void pedidoTerminado(String idPedido) async {
+    Map<String,String> body = {
+      'idPedido':'$idPedido'
+    };
+    String respuestaDelServer = await executeHttpRequest(urlFile: "/pedidoTerminado.php", requestBody: body);
+    print(respuestaDelServer);
+    imprimirLista();
+  }
+
   Widget _lista() {
     //final List<String> items = new List<String>.generate(10, (i) => "item  ${i + 1}");
     return Expanded(
@@ -420,6 +430,7 @@ class _PedidosState extends State<Pedidos> {
                     caption: 'Preparado',
                     color: Colors.greenAccent,
                     onTap: () {
+                      pedidoTerminado(pedidosItems[index].idPedido);
                       print("ID Item ${pedidosItems[index].idPedido} fue Clickeado");
                     }),
               ],
