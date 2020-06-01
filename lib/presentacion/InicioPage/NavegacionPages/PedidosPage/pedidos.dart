@@ -33,7 +33,6 @@ class _PedidosState extends State<Pedidos> {
       String aux = await textFormarter(pedido.toString());
       print(aux);
       Map<String,dynamic> datosPedido = json.decode(aux);
-      //this.idPedido, this.idUsuario, this.nombreUsuario, this.apePat, this.apeMat, this.estado, this.total, this.hora
       pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
     }
     setState(() {});
@@ -51,7 +50,6 @@ class _PedidosState extends State<Pedidos> {
       String aux = await textFormarter(pedido.toString());
       print(aux);
       Map<String,dynamic> datosPedido = json.decode(aux);
-      //this.idPedido, this.idUsuario, this.nombreUsuario, this.apePat, this.apeMat, this.estado, this.total, this.hora
       pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
     }
     setState(() {});
