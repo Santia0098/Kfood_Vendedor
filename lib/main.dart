@@ -16,7 +16,7 @@ void main(){
       ,onBackgroundMessage: bh
   );
   _firebaseMessaging.getToken().then((String token){
-    print("TOKEN: $token");5
+    print("TOKEN: $token");
   });
 
 }
