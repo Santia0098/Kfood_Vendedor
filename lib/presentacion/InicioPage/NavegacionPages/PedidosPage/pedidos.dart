@@ -33,7 +33,23 @@ class _PedidosState extends State<Pedidos> {
       String aux = await textFormarter(pedido.toString());
       print(aux);
       Map<String,dynamic> datosPedido = json.decode(aux);
-      //this.idPedido, this.idUsuario, this.nombreUsuario, this.apePat, this.apeMat, this.estado, this.total, this.hora
+      pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
+    }
+    setState(() {});
+  }
+
+  void imprimirListaForFinder(String text) async {
+    pedidosItems.clear();
+    Map<String,String> body = {
+      'termino':'$text'
+    };
+    String jsonPedidos = await executeHttpRequest(urlFile: "/getPedidosFinder.php", requestBody: body);
+    print(jsonPedidos);
+    Map<String,dynamic> datos = json.decode(jsonPedidos);
+    for (var pedido in datos['pedido']){
+      String aux = await textFormarter(pedido.toString());
+      print(aux);
+      Map<String,dynamic> datosPedido = json.decode(aux);
       pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
     }
     setState(() {});
@@ -131,6 +147,7 @@ class _PedidosState extends State<Pedidos> {
           Padding(
             padding: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 15),
             child: TextField(
+              onChanged: (text) {imprimirListaForFinder(text);},
               autofocus: false,
               style: TextStyle(fontSize: 15.0, color: Colors.black54),
               decoration: InputDecoration(
@@ -458,6 +475,7 @@ class Horas {
   Horas(this.id, this.hora);
   static List<Horas> getHoras() {
     return <Horas>[
+      Horas(1, 'Todo'),
       Horas(2, '07:55'),
       Horas(3, '08:50'),
       Horas(4, '09:45'),
