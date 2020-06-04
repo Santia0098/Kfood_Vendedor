@@ -14,14 +14,19 @@ class Pedidos extends StatefulWidget {
   _PedidosState createState() => _PedidosState();
 }
 
+final pedidosItems = <Pedido>[];
+_PedidosState ps;
 class _PedidosState extends State<Pedidos> {
-
-  final pedidosItems = <Pedido>[];
 
   @override
   void initState() {
     super.initState();
     imprimirLista();
+    ps = this;
+  }
+
+  void updateState() {
+    setState(() {});
   }
 
   void imprimirLista() async {
@@ -515,11 +520,33 @@ class HorasDropDownState extends State<HorasDropDown> {
     return items;
   }
 
-  onChangeDropdownItem(Horas selectedHrs) {
+  onChangeDropdownItem(Horas selectedHrs) async {
+    HorasDropDown.horas = _selectedHoras.hora;
+    print(selectedHrs.hora);
+    pedidosItems.clear();
+    if (selectedHrs.hora != "Todo") {
+      Map<String,String> body = {
+        'time':'${selectedHrs.hora}:00'
+      };
+      String jsonPedidos = await executeHttpRequest(urlFile: "/getPedidosByTime.php", requestBody: body);
+      print(jsonPedidos);
+      if (jsonPedidos != "[]"){
+        Map<String,dynamic> datos = json.decode(jsonPedidos);
+        for (var pedido in datos['pedido']){
+          String aux = await textFormarter(pedido.toString());
+          print(aux);
+          Map<String,dynamic> datosPedido = json.decode(aux);
+          pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
+        }
+      }
+      ps.updateState();
+    }else{
+      ps.imprimirLista();
+    }
+
     setState(() {
       _selectedHoras = selectedHrs;
     });
-    HorasDropDown.horas = _selectedHoras.hora;
   }
 
   @override
