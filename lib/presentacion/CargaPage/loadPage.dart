@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kfood_vendedor/complements/fadeAnimation/FadeAnimation.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/inicio.dart';
 import 'package:kfood_vendedor/presentacion/LoginPage/loginPage.dart';
+import 'package:kfood_vendedor/presentacion/LoginPage/widgets/loginLogic.dart';
 
 class LoadPage extends State<Splash> {
   @override
@@ -9,13 +11,22 @@ class LoadPage extends State<Splash> {
     super.initState();
     Timer(
       Duration(seconds: 4),
-      () {
-        Navigator.pushReplacement(
-          this.context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage(),
-          ),
-        );
+      () async {
+        if (await existUser()){
+          Navigator.pushReplacement(
+            this.context,
+            MaterialPageRoute(
+              builder: (context) => InicioPage(),
+            ),
+          );
+        }else{
+          Navigator.pushReplacement(
+            this.context,
+            MaterialPageRoute(
+              builder: (context) => LoginPage(),
+            ),
+          );
+        }
       },
     );
   }
