@@ -2,14 +2,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/model/platillo.dart';
 
 
 
 
 class PlatillosLista extends StatefulWidget {
+  PlatilloList pl = PlatilloList();
   @override
-  PlatilloList createState() => PlatilloList();
+  PlatilloList createState() => pl;
+  PlatilloList getPL(){
+    return pl;
+  }
 }
 
 
@@ -23,7 +28,11 @@ class PlatillosLista extends StatefulWidget {
   }
 
   void imprimirLista() async {
-    String jsonPlatillo = await executeHttpRequest(urlFile: "/getPlatillos.php", requestBody: null);
+    platilloItems.clear();
+    Map<String,String> body = {
+      'id':'${await getIDfromCafeteria()}'
+    };
+    String jsonPlatillo = await executeHttpRequest(urlFile: "/getPlatillos.php", requestBody: body);
     print(jsonPlatillo);
     Map<String,dynamic> datos = json.decode(jsonPlatillo);
     for(var platillo in datos['platillo']){

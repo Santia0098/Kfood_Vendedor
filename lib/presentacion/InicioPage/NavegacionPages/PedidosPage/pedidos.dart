@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/negocios/class/pedido.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
 
 class Pedidos extends StatefulWidget {
   Pedidos({Key key}) : super(key: key);
@@ -31,7 +33,10 @@ class _PedidosState extends State<Pedidos> {
 
   void imprimirLista() async {
     pedidosItems.clear();
-    String jsonPedidos = await executeHttpRequest(urlFile: "/getPedidos.php", requestBody: null);
+    Map<String,String> body = {
+      'id':'${await getIDfromCafeteria()}'
+    };
+    String jsonPedidos = await executeHttpRequest(urlFile: "/getPedidos.php", requestBody: body);
     print(jsonPedidos);
     Map<String,dynamic> datos = json.decode(jsonPedidos);
     for (var pedido in datos['pedido']){
@@ -46,7 +51,8 @@ class _PedidosState extends State<Pedidos> {
   void imprimirListaForFinder(String text) async {
     pedidosItems.clear();
     Map<String,String> body = {
-      'termino':'$text'
+      'termino':'$text',
+      'id':'${await getIDfromCafeteria()}'
     };
     String jsonPedidos = await executeHttpRequest(urlFile: "/getPedidosFinder.php", requestBody: body);
     print(jsonPedidos);
@@ -394,7 +400,8 @@ class _PedidosState extends State<Pedidos> {
 
   void _detallesdelPedido(String idPedido) async {
     Map<String,String> body = {
-      'idPedido':'$idPedido'
+      'idPedido':'$idPedido',
+      'id':'${await getIDfromCafeteria()}'
     };
     String jsonDetalles = await executeHttpRequest(urlFile: "/getPedidoDetalles.php", requestBody: body);
     print(jsonDetalles);

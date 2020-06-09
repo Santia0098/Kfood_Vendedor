@@ -3,14 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/model/guiso.dart';
 
 
 
 
 class GuisosLista extends StatefulWidget {
+  GuisoList gl = GuisoList();
   @override
-  GuisoList createState() => GuisoList();
+  GuisoList createState() => gl;
+  GuisoList getGL(){
+    return gl;
+  }
 }
 
 
@@ -24,7 +29,11 @@ class GuisosLista extends StatefulWidget {
   }
 
   imprimirLista() async{
-    String jsonGuiso = await executeHttpRequest(urlFile: "/getGuisos.php", requestBody: null);
+    guisoItems.clear();
+    Map<String,String> body = {
+      'id':'${await getIDfromCafeteria()}'
+    };
+    String jsonGuiso = await executeHttpRequest(urlFile: "/getGuisos.php", requestBody: body);
     print(jsonGuiso);
     Map<String,dynamic> datos = json.decode(jsonGuiso);
     for(var guiso in datos['guiso']){

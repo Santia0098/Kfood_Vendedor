@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kfood_vendedor/datos/requests.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/widgets/guisos_list.dart';
 
 
@@ -10,6 +11,14 @@ class GuisosScreen extends StatefulWidget {
 }
 
 class _GuisosScreenState extends State<GuisosScreen> {
+
+  GuisosLista gl;
+  @override
+  void initState() {
+    super.initState();
+    gl = GuisosLista();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +99,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
             
             Container(
               height: 500,
-              child: GuisosLista(),
+              child: gl,
             ),
             
            
@@ -194,12 +203,14 @@ class _GuisosScreenState extends State<GuisosScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {
+        onPressed: () async {
           if(guisoController.text.isNotEmpty){
             Map<String,String> body = {
               'nombre':'${guisoController.text}',
+              'id':'${await getIDfromCafeteria()}'
             };
             executeHttpRequest(urlFile: "/addGuiso.php", requestBody: body);
+            gl.getGL().imprimirLista();
             Navigator.of(context).pop();
 
           }

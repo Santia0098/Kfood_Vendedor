@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kfood_vendedor/datos/requests.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/widgets/platillos_list.dart';
  
 class PlatillosScreen extends StatefulWidget {
@@ -8,6 +10,14 @@ class PlatillosScreen extends StatefulWidget {
 }
 
 class _PlatillosScreenState extends State<PlatillosScreen> {
+
+  PlatillosLista pl;
+  @override
+  void initState() {
+    super.initState();
+    pl = PlatillosLista();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +98,7 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
             
             Container(
               height: 500,
-              child: PlatillosLista(),
+              child: pl,
             ),
             
            
@@ -234,19 +244,20 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {
+        onPressed: () async {
           if (RegExp("^[0-9]+(\.[0-9][0-9]?)?").hasMatch(precioController.text) &&
           platilloController.text.isNotEmpty) {
             String price = RegExp("^[0-9]+(\.[0-9][0-9]?)?").stringMatch(precioController.text);
             Map<String,String> body = {
               'nombre':'${platilloController.text}',
-              'precio':'$price'
+              'precio':'$price',
+              'id':'${await getIDfromCafeteria()}'
             };
             executeHttpRequest(urlFile: "/addPlatillo.php", requestBody: body);
+            pl.getPL().imprimirLista();
             Navigator.of(context).pop();
           }else{
-            //TODO: poner un toast
-            print("un error");
+            Fluttertoast.showToast(msg: "Ingrese una comida");
           }
           
         },

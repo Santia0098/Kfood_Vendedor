@@ -2,11 +2,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/model/comida.dart';
   
 class ComidasLista extends StatefulWidget {
+  ComidaList cl = ComidaList();
   @override
-  ComidaList createState() => ComidaList();
+  ComidaList createState() => cl;
+  ComidaList getCL() {
+    return cl;
+  }
 }
 
   class ComidaList extends State<ComidasLista> {
@@ -19,7 +24,11 @@ class ComidasLista extends StatefulWidget {
   }
 
   void imprimirLista() async {
-    String jsonComida = await executeHttpRequest(urlFile: "/getComidas.php", requestBody: null);
+    comidaItems.clear();
+    Map<String,String> body = {
+      'id':'${await getIDfromCafeteria()}'
+    };
+    String jsonComida = await executeHttpRequest(urlFile: "/getComidas.php", requestBody: body);
     print(jsonComida);
     Map<String,dynamic> datos = json.decode(jsonComida);
     for(var comida in datos['comida']){
