@@ -442,10 +442,11 @@ class _PedidosState extends State<Pedidos> {
   }
 
   void sendNotificationtoClient(String token, String idPedido) async {
+    String mensaje = await detallesPedidoFromServer(idPedido);
     Map<String,String> body = {
       'token':'$token',
       'title':'Pedido Terminado',
-      'body':'${await detallesPedidoFromServer(idPedido)}'
+      'body':'${mensaje.replaceAll("\n", ".")}'
     };
     String respuestaDelServer = await executeHttpRequest(urlFile: "/push.php", requestBody: body);
     print(respuestaDelServer);
