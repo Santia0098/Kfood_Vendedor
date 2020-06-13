@@ -39,15 +39,29 @@ class _MasState extends State<Mas> {
       };
     }
 
-    //getTotalVendido.php getMasVendido.php getNumeroPedidos.php
     String data = await executeHttpRequest(urlFile: "/getTotalVendido.php", requestBody: id);
-    valores[0] = json.decode(data)['total'];
+    if(data != "[]" && data != "{\"0\":null,\"total\":null}"){
+      print(data);
+      valores[0] = json.decode(data)['total'];
+    }else{
+      valores[0] = "0";
+    }
     data = await executeHttpRequest(urlFile: "/getNumeroPedidos.php", requestBody: id);
-    valores[1] = json.decode(data)['suma'];
+    if(data != "[]"){
+      print(data);
+      valores[1] = json.decode(data)['suma'];
+    }else{
+      valores[1] = "0";
+    }
     data = await executeHttpRequest(urlFile: "/getMasVendido.php", requestBody: id);
-    valores[2] = json.decode(data)['nombre_comida'];
+    if(data != "[]"){
+      print(data);
+      valores[2] = json.decode(data)['nombre_comida'];
+    }else{
+      valores[2] = "_";
+    }
+
     print("${valores[0]} ${valores[1]} ${valores[2]}");
-    print("vendido: $data");
     setState(() {});
   }
 
