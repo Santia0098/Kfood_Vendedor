@@ -43,7 +43,7 @@ class _PedidosState extends State<Pedidos> {
       String aux = await textFormarter(pedido.toString());
       print(aux);
       Map<String,dynamic> datosPedido = json.decode(aux);
-      pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
+      pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora'],datosPedido['token']));
     }
     setState(() {});
   }
@@ -61,7 +61,7 @@ class _PedidosState extends State<Pedidos> {
       String aux = await textFormarter(pedido.toString());
       print(aux);
       Map<String,dynamic> datosPedido = json.decode(aux);
-      pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
+      pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora'],datosPedido['hora']));
     }
     setState(() {});
   }
@@ -398,7 +398,7 @@ class _PedidosState extends State<Pedidos> {
     );
   }
 
-  void _detallesdelPedido(String idPedido) async {
+  Future<String> detallesPedidoFromServer(String idPedido) async {
     Map<String,String> body = {
       'idPedido':'$idPedido',
       'id':'${await getIDfromCafeteria()}'
@@ -420,6 +420,12 @@ class _PedidosState extends State<Pedidos> {
       }
 
     }
+    return mensaje;
+  }
+  void _detallesdelPedido(String idPedido) async {
+    
+    String mensaje = await detallesPedidoFromServer(idPedido);
+    
     showCupertinoModalPopup(
         context: context,
         builder: (context) {
@@ -435,6 +441,15 @@ class _PedidosState extends State<Pedidos> {
         });
   }
 
+  void sendNotificationtoClient(String token, String idPedido) async {
+    Map<String,String> body = {
+      'token':'$token',
+      'title':'Pedido Terminado',
+      'body':'${await detallesPedidoFromServer(idPedido)}'
+    };
+    String respuestaDelServer = await executeHttpRequest(urlFile: "/push.php", requestBody: body);
+    print(respuestaDelServer);
+  }
   void pedidoTerminado(String idPedido) async {
     Map<String,String> body = {
       'idPedido':'$idPedido'
@@ -460,7 +475,9 @@ class _PedidosState extends State<Pedidos> {
                     color: Colors.greenAccent,
                     onTap: () {
                       pedidoTerminado(pedidosItems[index].idPedido);
+                      sendNotificationtoClient(pedidosItems[index].token, pedidosItems[index].idPedido);
                       print("ID Item ${pedidosItems[index].idPedido} fue Clickeado");
+                      print("y su token es ${pedidosItems[index].token}");
                     }),
               ],
               child: _itemLista(pedidosItems[index]),
@@ -543,7 +560,7 @@ class HorasDropDownState extends State<HorasDropDown> {
           String aux = await textFormarter(pedido.toString());
           print(aux);
           Map<String,dynamic> datosPedido = json.decode(aux);
-          pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora']));
+          pedidosItems.add(Pedido(datosPedido['idpedidos'],datosPedido['idusuarios'],datosPedido['nombreUsuario'],datosPedido['apePat'],datosPedido['apeMat'],datosPedido['estado'],datosPedido['total'],datosPedido['hora'],datosPedido['hora']));
         }
       }
       ps.updateState();

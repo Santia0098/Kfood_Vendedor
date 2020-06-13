@@ -8,7 +8,8 @@ class Pedido{
   String estado;
   String total;
   String hora;
+  String token;
 
-  Pedido(this.idPedido, this.idUsuario, this.nombreUsuario, this.apePat, this.apeMat, this.estado, this.total, this.hora);
+  Pedido(this.idPedido, this.idUsuario, this.nombreUsuario, this.apePat, this.apeMat, this.estado, this.total, this.hora, this.token);
 
 }
