@@ -20,16 +20,25 @@ class _MasState extends State<Mas> {
   @override
   void initState() {
     super.initState();
-    getDataFromServer();
+    getDataFromServer("");
   }
 
   List<String> valores = List(3);
-  void getDataFromServer() async {
+  void getDataFromServer(String fecha) async {
     String idCafetria = await getIDfromCafeteria();
     print("idCafeteria:$idCafetria");
-    Map<String,String> id = {
-      'id':'$idCafetria'
-    };
+    Map<String,String> id;
+    if(fecha==""){
+      id = {
+        'id':'$idCafetria'
+      };
+    }else{
+      id = {
+        'id':'$idCafetria',
+        'fecha':'$fecha'
+      };
+    }
+
     //getTotalVendido.php getMasVendido.php getNumeroPedidos.php
     String data = await executeHttpRequest(urlFile: "/getTotalVendido.php", requestBody: id);
     valores[0] = json.decode(data)['total'];
@@ -460,7 +469,7 @@ class _MasState extends State<Mas> {
         // we format the selected date and assign it to the state variable
         _diaseleccionado = new DateFormat.yMMMMd("en_US").format(d);
       });
-    //TODO: filtrar por fecha
     print("fecha seleccionada: ${d.toString().substring(0,10)}");
+    getDataFromServer(d.toString().substring(0,10));
   }
 }
