@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:kfood_vendedor/datos/requests.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
+import 'package:kfood_vendedor/presentacion/LoginPage/widgets/registroLogic.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class Mas extends StatefulWidget {
@@ -11,6 +16,32 @@ class Mas extends StatefulWidget {
 }
 
 class _MasState extends State<Mas> {
+
+  @override
+  void initState() {
+    super.initState();
+    getDataFromServer();
+  }
+
+  List<String> valores = List(3);
+  void getDataFromServer() async {
+    String idCafetria = await getIDfromCafeteria();
+    print("idCafeteria:$idCafetria");
+    Map<String,String> id = {
+      'id':'$idCafetria'
+    };
+    //getTotalVendido.php getMasVendido.php getNumeroPedidos.php
+    String data = await executeHttpRequest(urlFile: "/getTotalVendido.php", requestBody: id);
+    valores[0] = json.decode(data)['total'];
+    data = await executeHttpRequest(urlFile: "/getNumeroPedidos.php", requestBody: id);
+    valores[1] = json.decode(data)['suma'];
+    data = await executeHttpRequest(urlFile: "/getMasVendido.php", requestBody: id);
+    valores[2] = json.decode(data)['nombre_comida'];
+    print("${valores[0]} ${valores[1]} ${valores[2]}");
+    print("vendido: $data");
+    setState(() {});
+  }
+
   var _diaseleccionado = "Dia de venta";
   ProgressDialog pr;
   @override
@@ -64,7 +95,9 @@ class _MasState extends State<Mas> {
                       pr.show();
                       Future.delayed(Duration(seconds: 2)).then((value) {
                         pr.hide();
+                        Navigator.pop(context);
                       });
+                      logOut();
                     },
                     padding: EdgeInsets.only(right: 0.0),
                     child: Text(
@@ -217,7 +250,7 @@ class _MasState extends State<Mas> {
                 color: Colors.white54,
               ),
               title: Text(
-                "\$${8890.00}",
+                "\$${valores[0]}",
                 style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'SFUIDisplay',
@@ -258,7 +291,7 @@ class _MasState extends State<Mas> {
                 color: Colors.white54,
               ),
               title: Text(
-                "45",
+                "${valores[1]}",
                 style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'SFUIDisplay',
@@ -300,7 +333,7 @@ class _MasState extends State<Mas> {
                 color: Colors.white54,
               ),
               title: Text(
-                "Boneless",
+                "${valores[2]}",
                 style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'SFUIDisplay',
@@ -427,5 +460,7 @@ class _MasState extends State<Mas> {
         // we format the selected date and assign it to the state variable
         _diaseleccionado = new DateFormat.yMMMMd("en_US").format(d);
       });
+    //TODO: filtrar por fecha
+    print("fecha seleccionada: ${d.toString().substring(0,10)}");
   }
 }
