@@ -290,7 +290,7 @@ class _PedidosState extends State<Pedidos> {
                             ]),
                           ),
                           Text(
-                            "${pedidosItem.hora.replaceAll("-", ":")}",
+                            "${pedidosItem.hora.replaceAll("-", ":").replaceRange(5, 8, "")}",
                             style: new TextStyle(
                                 fontSize: 13,
                                 fontFamily: "SFUIDisplay",
