@@ -23,7 +23,7 @@ class _MasState extends State<Mas> {
     getDataFromServer("");
   }
 
-  List<String> valores = List(3);
+  List<String> valores = ["_","_","_"];
   void getDataFromServer(String fecha) async {
     String idCafetria = await getIDfromCafeteria();
     print("idCafeteria:$idCafetria");
