@@ -205,8 +205,21 @@ class _GuisosScreenState extends State<GuisosScreen> {
         elevation: 5.0,
         onPressed: () async {
           if(guisoController.text.isNotEmpty){
+            String toFixGuiso = guisoController.text;
+            while(toFixGuiso.contains("  ") || toFixGuiso.startsWith(" ") || toFixGuiso.endsWith(" ")){
+              toFixGuiso = toFixGuiso.replaceAll("  ", " ");
+              if(toFixGuiso.startsWith(" ")){
+                toFixGuiso = toFixGuiso.replaceFirst(" ", "");
+              }
+              if(toFixGuiso.endsWith(" ")){
+                toFixGuiso = toFixGuiso.replaceRange(toFixGuiso.length-1, toFixGuiso.length, "");
+              }
+              if(toFixGuiso==""){
+                return;
+              }
+            }
             Map<String,String> body = {
-              'nombre':'${guisoController.text}',
+              'nombre':'$toFixGuiso',
               'id':'${await getIDfromCafeteria()}'
             };
             executeHttpRequest(urlFile: "/addGuiso.php", requestBody: body);

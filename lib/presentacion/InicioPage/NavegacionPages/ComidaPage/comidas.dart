@@ -248,8 +248,21 @@ class _ComidasScreenState extends State<ComidasScreen> {
           if (RegExp("^[0-9]+(\.[0-9][0-9]?)?").hasMatch(precioController.text) &&
               comidaController.text.isNotEmpty) {
             String price = RegExp("^[0-9]+(\.[0-9][0-9]?)?").stringMatch(precioController.text);
+            String toFixComida = comidaController.text;
+            while(toFixComida.contains("  ") || toFixComida.startsWith(" ") || toFixComida.endsWith(" ")){
+              toFixComida = toFixComida.replaceAll("  ", " ");
+              if(toFixComida.startsWith(" ")){
+                toFixComida = toFixComida.replaceFirst(" ", "");
+              }
+              if(toFixComida.endsWith(" ")){
+                toFixComida = toFixComida.replaceRange(toFixComida.length-1, toFixComida.length, "");
+              }
+              if(toFixComida==""){
+                return;
+              }
+            }
             Map<String,String> body = {
-              'nombre':'${comidaController.text}',
+              'nombre':'$toFixComida',
               'precio':'$price',
               'id':'${await getIDfromCafeteria()}'
             };

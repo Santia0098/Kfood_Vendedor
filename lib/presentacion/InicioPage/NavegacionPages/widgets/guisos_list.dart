@@ -38,8 +38,8 @@ class GuisosLista extends StatefulWidget {
     Map<String,dynamic> datos = json.decode(jsonGuiso);
     for(var guiso in datos['guiso']){
       String aux = await textFormarter(guiso.toString());
-      print(guiso);
-      print(aux);
+      print("guiso=$guiso");
+      print("aux=$aux");
       Map<String,dynamic> datosguiso = json.decode(aux);
       guisoItems.add(Guiso(datosguiso['id'],datosguiso['nombre']));
     }

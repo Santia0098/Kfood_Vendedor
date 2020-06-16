@@ -248,8 +248,21 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
           if (RegExp("^[0-9]+(\.[0-9][0-9]?)?").hasMatch(precioController.text) &&
           platilloController.text.isNotEmpty) {
             String price = RegExp("^[0-9]+(\.[0-9][0-9]?)?").stringMatch(precioController.text);
+            String toFixPlatillo = platilloController.text;
+            while(toFixPlatillo.contains("  ") || toFixPlatillo.startsWith(" ") || toFixPlatillo.endsWith(" ")){
+              toFixPlatillo = toFixPlatillo.replaceAll("  ", " ");
+              if(toFixPlatillo.startsWith(" ")){
+                toFixPlatillo = toFixPlatillo.replaceFirst(" ", "");
+              }
+              if(toFixPlatillo.endsWith(" ")){
+                toFixPlatillo = toFixPlatillo.replaceRange(toFixPlatillo.length-1, toFixPlatillo.length, "");
+              }
+              if(toFixPlatillo==""){
+                return;
+              }
+            }
             Map<String,String> body = {
-              'nombre':'${platilloController.text}',
+              'nombre':'$toFixPlatillo',
               'precio':'$price',
               'id':'${await getIDfromCafeteria()}'
             };
