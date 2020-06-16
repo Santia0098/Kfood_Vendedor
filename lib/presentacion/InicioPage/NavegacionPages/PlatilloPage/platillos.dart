@@ -267,6 +267,8 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
               'id':'${await getIDfromCafeteria()}'
             };
             executeHttpRequest(urlFile: "/addPlatillo.php", requestBody: body);
+            precioController.text = "";
+            platilloController.text = "";
             pl.getPL().imprimirLista();
             Navigator.of(context).pop();
           }else{

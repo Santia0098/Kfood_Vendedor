@@ -267,6 +267,8 @@ class _ComidasScreenState extends State<ComidasScreen> {
               'id':'${await getIDfromCafeteria()}'
             };
             executeHttpRequest(urlFile: "/addComida.php", requestBody: body);
+            precioController.text = "";
+            comidaController.text = "";
             cl.getCL().imprimirLista();
             Navigator.of(context).pop();
           }else{

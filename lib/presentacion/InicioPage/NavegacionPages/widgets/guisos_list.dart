@@ -105,7 +105,9 @@ class GuisosLista extends StatefulWidget {
                       Map<String,String> body = {
                         'id':'${guiso.id}'
                       };
-                      executeHttpRequest(urlFile: "/dropGuiso.php", requestBody: body);
+                      executeHttpRequest(urlFile: "/dropGuiso.php", requestBody: body).then((respuesta){
+                        print("/dropGuisos.php respondio: $respuesta[cuando: id=${guiso.id}]");
+                      });
                       guisoItems.clear();
                       imprimirLista();
                     },

@@ -223,6 +223,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
               'id':'${await getIDfromCafeteria()}'
             };
             executeHttpRequest(urlFile: "/addGuiso.php", requestBody: body);
+            guisoController.text = "";
             gl.getGL().imprimirLista();
             Navigator.of(context).pop();
 
