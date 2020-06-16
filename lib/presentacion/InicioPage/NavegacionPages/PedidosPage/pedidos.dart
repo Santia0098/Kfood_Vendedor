@@ -551,7 +551,8 @@ class HorasDropDownState extends State<HorasDropDown> {
     pedidosItems.clear();
     if (selectedHrs.hora != "Todo") {
       Map<String,String> body = {
-        'time':'${selectedHrs.hora}:00'
+        'time':'${selectedHrs.hora}',
+        'id':'${await getIDfromCafeteria()}'
       };
       String jsonPedidos = await executeHttpRequest(urlFile: "/getPedidosByTime.php", requestBody: body);
       print(jsonPedidos);
