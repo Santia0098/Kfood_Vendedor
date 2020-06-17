@@ -81,7 +81,7 @@ updateToken() async {
     'id':'$id',
     'token':'$token'
   };
-  executeHttpRequest(urlFile: "/updateToken.php", requestBody: body).then((respuesta){
+  executeHttpRequest(urlFile: "/updateTokenCafeteria.php", requestBody: body).then((respuesta){
     print("updateToken.php respondio: $respuesta, cuando id=$id al actualizar token:$token");
   });
 }
