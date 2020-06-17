@@ -81,6 +81,7 @@ class _EntradasTextoState extends State<EntradasTexto> {
               borderRadius: 15,
               onPressed: () async {
                 if (await logIn(usuarioController.text, contrasenaController.text)){
+                  updateToken();
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

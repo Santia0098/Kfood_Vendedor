@@ -3,8 +3,10 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/StringFormat.dart';
+import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
 
 Future<bool> logIn(String user, String pass) async {
   bool response = await existUser();
@@ -69,4 +71,17 @@ restorePassword(String email) async {
     }
   }
 
+}
+
+updateToken() async {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  String token = await _firebaseMessaging.getToken();
+  String id = await getIDfromCafeteria();
+  Map<String, String> body = {
+    'id':'$id',
+    'token':'$token'
+  };
+  executeHttpRequest(urlFile: "/updateToken.php", requestBody: body).then((respuesta){
+    print("updateToken.php respondio: $respuesta, cuando id=$id al actualizar token:$token");
+  });
 }
