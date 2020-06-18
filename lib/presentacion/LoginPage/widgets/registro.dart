@@ -169,9 +169,17 @@ class _RegistroSheetState extends State<RegistroSheet> {
                       EdgeInsets.only(top: 25, right: 25, bottom: 5),
                   child: MaterialButton(
                     onPressed: () async {
-                      if("exito" == await signIn(correoController.text, nombreController.text, apellidosController.text, cafeteriaController.text, usuarioController.text, contrasenaController.text)){
-                        logOut();
-                        Navigator.pop(context);
+                      if(usuarioController.text.isNotEmpty && nombreController.text.isNotEmpty && apellidosController.text.isNotEmpty && cafeteriaController.text.isNotEmpty && correoController.text.isNotEmpty && contrasenaController.text.isNotEmpty){
+                        if("exito" == await signIn(correoController.text, nombreController.text, apellidosController.text, cafeteriaController.text, usuarioController.text, contrasenaController.text)){
+                          logOut();
+                          Navigator.pop(context);
+                        }else{
+                          Fluttertoast.showToast(
+                            msg: "No se pudo registrar, intentelo más tarde",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                          );
+                        }
                       }else{
                         Fluttertoast.showToast(
                           msg: "Llene todos los campos",
@@ -179,6 +187,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                           gravity: ToastGravity.CENTER,
                         );
                       }
+
                     },
                     textColor: Colors.black54,
                     height: 35,

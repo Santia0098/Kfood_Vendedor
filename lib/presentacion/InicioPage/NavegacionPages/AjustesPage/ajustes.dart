@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:kfood_vendedor/datos/requests.dart';
 import 'package:kfood_vendedor/presentacion/InicioPage/NavegacionPages/helper/getIDfromCafeterias.dart';
+import 'package:kfood_vendedor/presentacion/LoginPage/loginPage.dart';
 import 'package:kfood_vendedor/presentacion/LoginPage/widgets/registroLogic.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -118,7 +119,11 @@ class _MasState extends State<Mas> {
                       pr.show();
                       Future.delayed(Duration(seconds: 2)).then((value) {
                         pr.hide();
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => LoginPage(),
+                            ));
                       });
                       logOut();
                     },

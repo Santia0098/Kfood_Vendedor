@@ -45,6 +45,7 @@ class _EntradasTextoState extends State<EntradasTexto> {
               width: 300,
               child: TextFormField(
                 controller: contrasenaController,
+                obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Contraseña",
                   hintText: "Contraseña de cuenta",
