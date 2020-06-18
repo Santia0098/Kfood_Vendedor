@@ -17,7 +17,7 @@ class _ComidasScreenState extends State<ComidasScreen> {
     super.initState();
     cl = ComidasLista();
   }
-
+//mod  d
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,7 +49,7 @@ class _ComidasScreenState extends State<ComidasScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Administra el menú del día",
+                    "Administra el menú del día ",
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 18,
