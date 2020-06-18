@@ -29,7 +29,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
         shape: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(color: Colors.white70)),
-        child: Text("Registrate ahora." ),
+        child: Text("Registrate ahora" ),
       ),
     );
   }
@@ -46,6 +46,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
         context: context,
         builder: (context) {
           return Container(
+
             alignment: Alignment.topLeft,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height - 40,
@@ -56,7 +57,9 @@ class _RegistroSheetState extends State<RegistroSheet> {
                 topRight: const Radius.circular(10),
               )
             ),
+          child: SingleChildScrollView(
             child: Column(
+
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 CabeceraReg(),
@@ -64,12 +67,13 @@ class _RegistroSheetState extends State<RegistroSheet> {
                   thickness: 2,
                 ),
                 Padding(
+
                     padding: EdgeInsets.only(top: 20, left: 25, right: 25),
                     child: TextFormField(
                       controller: usuarioController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.person_outline),
-                        labelText: "Usuario. ",
+                        labelText: "Usuario ",
                         hintText: "Ingrese un usuario.",
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
@@ -85,7 +89,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                       controller: nombreController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.perm_contact_calendar),
-                        labelText: "Nombre.",
+                        labelText: "Nombre",
                         hintText: "Nombre.",
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
@@ -101,7 +105,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                       controller: apellidosController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.perm_contact_calendar),
-                        labelText: "Apellidos.",
+                        labelText: "Apellidos",
                         hintText: "Apellidos",
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
@@ -149,7 +153,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                       controller: contrasenaController,
                       decoration: InputDecoration(
                         icon: Icon(Icons.vpn_key),
-                        labelText: "Contraseña.",
+                        labelText: "Contraseña",
                         hintText: "Cree una contraseña",
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
@@ -185,11 +189,12 @@ class _RegistroSheetState extends State<RegistroSheet> {
                     shape: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide(color: Colors.redAccent)),
-                    child: Text("Crear cuenta."),
+                    child: Text("Crear cuenta"),
                   ),
                 )
               ],
             ),
+          ),
           );
         });
   }

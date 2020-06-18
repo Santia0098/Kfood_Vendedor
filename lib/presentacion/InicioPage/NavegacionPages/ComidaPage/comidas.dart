@@ -20,7 +20,9 @@ class _ComidasScreenState extends State<ComidasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+    home:Scaffold(
       backgroundColor: Colors.white,
       body: Container(
         child: ListView(
@@ -105,6 +107,7 @@ class _ComidasScreenState extends State<ComidasScreen> {
            ],
         ),
       ),
+    ),
     );
   }
 

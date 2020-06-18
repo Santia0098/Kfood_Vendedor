@@ -21,7 +21,9 @@ class _GuisosScreenState extends State<GuisosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+    home: Scaffold(
       backgroundColor: Colors.white,
       body: Container(
         child: ListView(
@@ -106,6 +108,7 @@ class _GuisosScreenState extends State<GuisosScreen> {
            ],
         ),
       ),
+    ),
     );
   }
 

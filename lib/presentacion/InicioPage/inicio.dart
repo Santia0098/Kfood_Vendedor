@@ -73,11 +73,11 @@ class _NavigationBarState extends State<FoodNavigationBar> {
          key: _bottomNavigationKey,
           currentIndex: pageindex,
           unselectedItemColor: Colors.black38,
-          selectedItemColor: Color.fromARGB(255, 177, 145, 1),
+          selectedItemColor: Color.fromRGBO(248, 64, 0, 1),
          items: 
          [
            BottomNavigationBarItem(
-             icon: Icon(Icons.shopping_basket, color: Color.fromARGB(255, 177, 145, 5),),
+             icon: Icon(Icons.shopping_basket),
              title: new Text("Pedidos", style: TextStyle(
                color: Colors.black38
              ),)

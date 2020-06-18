@@ -385,9 +385,9 @@ class _PedidosState extends State<Pedidos> {
                           new Text(
                             "$mensaje",
                             style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 18,
                                 fontFamily: 'SFUIDisplay',
-                                color: Colors.black45),
+                                color: Colors.black54),
                           ),
                         ],
                       ))),
