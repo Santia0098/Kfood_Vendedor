@@ -74,7 +74,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                       decoration: InputDecoration(
                         icon: Icon(Icons.person_outline),
                         labelText: "Usuario ",
-                        hintText: "Ingrese un usuario.",
+                        hintText: "Ingrese un usuario",
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -90,7 +90,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                       decoration: InputDecoration(
                         icon: Icon(Icons.perm_contact_calendar),
                         labelText: "Nombre",
-                        hintText: "Nombre.",
+                        hintText: "Nombre",
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -122,7 +122,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                       decoration: InputDecoration(
                         icon: Icon(Icons.restaurant),
                         labelText: "Cafeteria",
-                        hintText: "Nombre de cafeteria",
+                        hintText: "Nombre de la cafeteria",
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -174,7 +174,7 @@ class _RegistroSheetState extends State<RegistroSheet> {
                         Navigator.pop(context);
                       }else{
                         Fluttertoast.showToast(
-                          msg: "El correo no es del itsmante",
+                          msg: "Llene todos los campos",
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.CENTER,
                         );

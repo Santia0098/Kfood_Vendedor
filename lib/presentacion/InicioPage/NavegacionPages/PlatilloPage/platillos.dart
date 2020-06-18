@@ -70,7 +70,7 @@ class _PlatillosScreenState extends State<PlatillosScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Aregar al platillo",
+                    "Agregar al platillo",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
