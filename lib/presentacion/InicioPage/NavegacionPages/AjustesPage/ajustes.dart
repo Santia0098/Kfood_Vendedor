@@ -120,8 +120,8 @@ class _MasState extends State<Mas> {
                       Future.delayed(Duration(seconds: 2)).then((value) {
                         pr.hide();
                         Navigator.pushReplacement(
-                            context,
-                            CupertinoPageRoute(
+                            this.context,
+                            MaterialPageRoute(
                               builder: (context) => LoginPage(),
                             ));
                       });

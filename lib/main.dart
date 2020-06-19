@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:kfood_vendedor/presentacion/CargaPage/loadPage.dart';
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'KFood',
       debugShowCheckedModeBanner: false,
+
       home: Scaffold(
         body: Splash(),
       ),
